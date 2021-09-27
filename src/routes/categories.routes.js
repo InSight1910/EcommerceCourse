@@ -1,18 +1,20 @@
-const { Category } = require("../models/category");
 const express = require("express");
 const router = express.Router();
 
-const { newCategory } = require("../controllers/index");
+const {
+	categories: {
+		newCategory,
+		deleteCategory,
+		getListOfCategories,
+		getCategory,
+		updateCategory,
+	},
+} = require("../controllers");
 
-router.get(`/`, async (req, res) => {
-	const categoryList = await Category.find();
-
-	if (!categoryList) {
-		res.status(500).json({ success: false });
-	}
-	res.send(categoryList);
-});
-
+router.get(`/`, getListOfCategories);
+router.get(`/:id`, getCategory);
 router.post(`/`, newCategory);
+router.put(`/:id`, updateCategory);
+router.delete(`/:id`, deleteCategory);
 
 module.exports = router;

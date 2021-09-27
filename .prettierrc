@@ -1,9 +1,10 @@
 {
-  "tabWidth": 4,
-  "useTabs": true,
-  "semi": true,
-  "singleQuote": false,
-  "bracketSpacing": true,
-  "bracketSameLine": false,
-  "arrowParens": "always"
+	"parser": "espree",
+	"tabWidth": 4,
+	"useTabs": true,
+	"semi": true,
+	"singleQuote": false,
+	"bracketSpacing": true,
+	"bracketSameLine": false,
+	"arrowParens": "always"
 }
