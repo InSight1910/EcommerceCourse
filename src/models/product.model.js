@@ -66,4 +66,4 @@ const productSchema = Schema({
 	},
 });
 
-module.exports = model("Product", productSchema);
+exports.Product = model("Product", productSchema);

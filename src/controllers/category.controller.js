@@ -1,4 +1,4 @@
-const Category = require("../models/category.model");
+const { Category } = require("../models/category.model");
 const { isValidObjectId } = require("mongoose");
 
 const getListOfCategories = async (req, res) => {

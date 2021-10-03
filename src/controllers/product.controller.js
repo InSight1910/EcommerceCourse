@@ -1,5 +1,5 @@
-const Product = require("../models/product.model");
-const Category = require("../models/category.model");
+const { Product } = require("../models/product.model");
+const { Category } = require("../models/category.model");
 const { isValidObjectId } = require("mongoose");
 
 const getProductList = async (req, res) => {
@@ -140,16 +140,16 @@ const getProductCount = async (req, res) => {
 	if (!productCount)
 		return res.status(500).json({
 			success: false,
-			message: "There was a problem counting the documents",
+			message: "There was a problem counting the products",
 		});
 	res.status(200).json({ success: true, productCount });
 };
 
 const getProductFeature = async (req, res) => {
 	const { count } = req.query;
-	const productsFeatured = await Product.find({ isFeatured: true }).limit(
-		+count || 0
-	);
+	const productsFeatured = await Product.find({ isFeatured: true })
+		.limit(+count || 0)
+		.populate("category");
 	if (!productsFeatured)
 		return res.status(500).json({
 			success: false,
