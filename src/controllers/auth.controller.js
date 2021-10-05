@@ -1,62 +1,72 @@
+const {
+	Error: { ValidationError },
+} = require("mongoose");
+
 const { User } = require("../models/user.model");
 const { Auth } = require("../models/auth.model");
+const {
+	InvalidCredentialsException,
+	NotFoundException,
+} = require("../helpers/errors");
 
-const signUp = async (req, res) => {
-	const {
-		name,
-		email,
-		password,
-		phone,
-		isAdmin,
-		street,
-		apartment,
-		zip,
-		city,
-		country,
-	} = req.body;
-	const user = await new User({
-		name,
-		email,
-		phone,
-		isAdmin,
-		street,
-		apartment,
-		zip,
-		city,
-		country,
-	}).save();
-	const auth = await new Auth({
-		email,
-		password,
-	});
-	await auth.encryptPassword();
-	auth.save();
+const signUp = async (req, res, next) => {
+	try {
+		const {
+			name,
+			email,
+			password,
+			phone,
+			isAdmin,
+			street,
+			apartment,
+			zip,
+			city,
+			country,
+		} = req.body;
+		const user = await new User({
+			name,
+			email,
+			phone,
+			isAdmin,
+			street,
+			apartment,
+			zip,
+			city,
+			country,
+		}).save();
+		const auth = await new Auth({
+			email,
+			password,
+		});
+		await auth.encryptPassword();
+		auth.save();
 
-	if (!user) return res.status(500).send("the user cannot be created!");
+		if (!user) throw new ValidationError();
+		if (!auth) throw new ValidationError();
 
-	res.send(user);
+		res.send(user);
+	} catch (error) {
+		next(error);
+	}
 };
-const login = async (req, res) => {
-	const { email, password } = req.body;
-	const secretKey = process.env.SECRET_KEY;
-	const user = await User.findOne({ email });
-	if (!user)
-		return res.status(404).json({
-			success: false,
-			message: "The user cannot be find. Try again with another email.",
-		});
-	if (await user.comparePassword(password)) {
-		const token = sign(
-			{ userID: user.id, isAdmin: user.isAdmin },
-			secretKey,
-			{ expiresIn: "4h" }
-		);
-		res.status(200).json({ user: user.email, token });
-	} else {
-		res.status(401).json({
-			success: false,
-			message: "Wrong password. Try again with another password",
-		});
+const login = async (req, res, next) => {
+	try {
+		const { email, password } = req.body;
+		const secretKey = process.env.SECRET_KEY;
+		const user = await User.findOne({ email });
+		if (!user) throw new NotFoundException("user", "email");
+		if (await user.comparePassword(password)) {
+			const token = sign(
+				{ userID: user.id, isAdmin: user.isAdmin },
+				secretKey,
+				{ expiresIn: "4h" }
+			);
+			res.status(200).json({ user: user.email, token });
+		} else {
+			throw new InvalidCredentialsException();
+		}
+	} catch (error) {
+		next(error);
 	}
 };
 

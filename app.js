@@ -18,8 +18,11 @@ const productsRoute = require("./src/routes/products.routes");
 const userRoute = require("./src/routes/users.routes");
 const orderRoute = require("./src/routes/orders.routes");
 const authRoute = require("./src/routes/auth.routes");
+const { OrderItem } = require("./src/models/orderItem.model");
 
 const api = process.env.API_URl;
+
+app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 
 app.use(`${api}/categories`, categoriesRoute);
 app.use(`${api}/products`, productsRoute);

@@ -16,13 +16,10 @@ const productSchema = Schema({
 	image: {
 		type: String,
 		default: "",
-		required: true,
 	},
 	images: [
 		{
 			type: String,
-			default: "",
-			required: true,
 		},
 	],
 	brand: {

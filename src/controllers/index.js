@@ -14,6 +14,7 @@ const {
 	updateProduct,
 	getProductCount,
 	getProductFeature,
+	updateGalleryProduct,
 } = require("./product.controller.js");
 
 const { getUser, getCountUser } = require("./users.controller");
@@ -46,9 +47,11 @@ module.exports = {
 		updateProduct,
 		getProductCount,
 		getProductFeature,
+		updateGalleryProduct,
 	},
 	users: {
 		getUser,
+		getCountUser,
 	},
 	auth: {
 		signUp,
