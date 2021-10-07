@@ -17,6 +17,7 @@ const ExtensionFileWrongException = function (extension) {
 		success: false,
 		message: `The following extension: ${extension} is not valid. We only accept JPG, JPEG, PNG.`,
 	};
+	this.status = 400;
 };
 ExtensionFileWrongException.prototype = Error.prototype;
 
@@ -26,6 +27,7 @@ const NotFileException = function () {
 		success: false,
 		message: `We cannot find any image. Pls upload a image with the following extensions: PNG, JPG, JPEG.`,
 	};
+	this.status = 400;
 };
 NotFileException.prototype = Error.prototype;
 
@@ -37,6 +39,7 @@ const InvalidObjectIDException = function (model = "") {
 			model + " "
 		}ID that you provide is not valid, Try again with a valid ID.`,
 	};
+	this.status = 400;
 };
 InvalidObjectIDException.prototype = Error.prototype;
 

@@ -6,6 +6,11 @@ const {
 	NotFoundException,
 } = require("../helpers/errors");
 
+const getUsers = async (req, res, next) => {
+	const users = await User.find();
+	res.status(200).json(users);
+};
+
 const getUser = async (req, res, next) => {
 	try {
 		const { id } = req.params;
@@ -26,4 +31,4 @@ const getCountUser = async (req, res) => {
 	res.status(200).json({ success: true, userCount });
 };
 
-module.exports = { getUser, getCountUser };
+module.exports = { getUsers, getUser, getCountUser };

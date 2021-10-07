@@ -19,9 +19,18 @@ function errorHandler(err, req, res, next) {
 		return res.status(400).json({ success: false, message: newMessage });
 	}
 
-	if (err.name === "NotFoundException") {
+	if (err.name === "NotFoundException")
 		return res.status(err.status).json({ ...err.message });
-	}
+
+	if (err.name === "NotFileException")
+		return res.status(err.status).json({ ...err.message });
+
+	if (err.name === "InvalidObjectIDException")
+		return res.status(err.status).json({ ...err.message });
+
+	if (err.name === "InvalidCredentialException")
+		return res.status(err.status).json({ ...err.message });
+
 	// default to 500 server error
 	return res.status(500).json(err.message);
 }

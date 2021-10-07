@@ -17,7 +17,7 @@ const {
 	updateGalleryProduct,
 } = require("./product.controller.js");
 
-const { getUser, getCountUser } = require("./users.controller");
+const { getUsers, getUser, getCountUser } = require("./users.controller");
 
 const { signUp, login } = require("./auth.controller");
 
