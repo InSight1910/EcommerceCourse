@@ -74,16 +74,8 @@ const getTotalSales = async (req, res) => {
 
 const createOrder = async (req, res, next) => {
 	try {
-		const {
-			orderItems,
-			shipingAddress,
-			city,
-			zip,
-			country,
-			phone,
-			status,
-			user,
-		} = req.body;
+		const { orderItems, shipingAddress, city, zip, country, phone, user } =
+			req.body;
 
 		const orderItemList = await Promise.all(
 			orderItems.map(async (item) => {
