@@ -7,7 +7,7 @@ const orderSchema = Schema({
 			ref: "OrderItem",
 		},
 	],
-	shipingAddress: [{ type: String, required: true }],
+	shipingAddress: { type: String, required: true },
 	city: {
 		type: String,
 		required: true,
